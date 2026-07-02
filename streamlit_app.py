@@ -140,8 +140,8 @@ with col1:
     st.markdown(f'<div class="lvl-badge">LV.{st.session_state.player_level}</div>', unsafe_allow_html=True)
     st.markdown(f'<h3 style="color:#00E5FF; margin:0 0 10px 0;">👤 {player.name}</h3>', unsafe_allow_html=True)
     
-    # 용사 픽셀 이미지 렌더링
-    st.image("warrior.png", use_container_width=True)
+    # 용사 픽셀 이미지 렌더링 (움직이는 GIF)
+    st.image("warrior.gif", use_container_width=True)
     
     # 네온 체력바 (HP Gauge)
     hp_pct = max(0, min(100, int(player.hp)))
