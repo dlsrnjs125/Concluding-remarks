@@ -21,7 +21,7 @@ class Game:
             choice = input("원하는 메뉴의 번호를 입력하세요: ").strip()
 
             if choice == "1":
-                self.battle_manager.battle(self.player, self.monster)
+                self.battle_manager.player_attack(self.player, self.monster)
                 if self.monster.hp <= 0:
                     print(f"\n축하합니다! {self.monster.name}을(를) 물리쳤습니다!")
                     print("게임을 종료합니다.")
