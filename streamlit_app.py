@@ -12,22 +12,24 @@ st.set_page_config(page_title="RETRO 8-BIT MONSTER SLAYER", page_icon="🎮", la
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.1/NeoDunggeunmo.woff');
 
 body {
     background-color: #0F0F13;
     color: #F0F0F0;
 }
 .arcade-title {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 26px;
+    font-family: 'NeoDunggeunmo', monospace;
+    font-size: 32px;
     color: #FFD700;
     text-align: center;
     text-shadow: 3px 3px #FF0055, -2px -2px #00E5FF;
     padding: 20px 0 5px 0;
     margin-bottom: 5px;
+    letter-spacing: 2px;
 }
 .arcade-subtitle {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'NeoDunggeunmo', monospace;
     font-size: 16px;
     color: #00E5FF;
     text-align: center;
@@ -102,8 +104,8 @@ body {
 """, unsafe_allow_html=True)
 
 # 타이틀 표시
-st.markdown('<div class="arcade-title">MONSTER SLAYER</div>', unsafe_allow_html=True)
-st.markdown('<div class="arcade-subtitle">> INSERT COIN TO PLAY _</div>', unsafe_allow_html=True)
+st.markdown('<div class="arcade-title">몬스타 몹 잡기</div>', unsafe_allow_html=True)
+st.markdown('<div class="arcade-subtitle">동전 넣기 _</div>', unsafe_allow_html=True)
 
 # 세션 상태 초기화 (레벨 및 경험치 시스템 도입)
 if "player_level" not in st.session_state:
