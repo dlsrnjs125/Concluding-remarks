@@ -1,4 +1,6 @@
 import streamlit as st
+import contextlib
+import io
 from player import Player
 from monster import BlueMushroom
 from battle import BattleManager
@@ -67,28 +69,27 @@ elif monster.hp <= 0:
 else:
     # 게임 전투 버튼
     if st.button("⚔️ 공격하기", use_container_width=True):
-        # 1. 플레이어 공격
-        damage = player.attack_power - monster.defense
-        if damage < 1:
-            damage = 1
-        monster.hp -= damage
-        if monster.hp < 0:
-            monster.hp = 0
-
-        st.session_state.log.append(f"⚔️ {player.name}이(가) {monster.name}에게 {damage}의 피해를 입혔습니다!")
-
-        # 2. 몬스터 사망 판단 (BattleManager 사용)
-        if battle_manager.is_monster_dead(monster):
-            st.session_state.log.append(f"🎉 {monster.name}을(를) 처치했습니다!")
-        else:
-            # 3. 몬스터가 살아있다면 반격
-            player.hp -= monster.attack_power
-            if player.hp < 0:
-                player.hp = 0
-            st.session_state.log.append(f"💥 {monster.name}이(가) 반격하여 {player.name}에게 {monster.attack_power}의 피해를 입혔습니다!")
+        # sys.stdout을 캡처하여 클래스 내부의 print 출력을 Streamlit 로그에 기록합니다.
+        f = io.StringIO()
+        with contextlib.redirect_stdout(f):
+            # 1. BattleManager를 통해 실제 게임 비즈니스 로직(공격 및 판정) 실행
+            battle_manager.player_attack(player, monster)
             
-            if player.hp <= 0:
-                st.session_state.log.append(f"💀 {player.name}이(가) 결국 쓰러졌습니다...")
+            # 2. 몬스터가 살아있다면 반격 처리
+            if not battle_manager.is_monster_dead(monster):
+                player.hp -= monster.attack_power
+                if player.hp < 0:
+                    player.hp = 0
+                print(f"💥 {monster.name}이(가) 반격하여 {player.name}에게 {monster.attack_power}의 피해를 입혔습니다!")
+                if player.hp <= 0:
+                    print(f"💀 {player.name}이(가) 결국 쓰러졌습니다...")
+
+        # 캡처한 텍스트 출력 가져오기
+        output_text = f.getvalue().strip()
+        if output_text:
+            for line in output_text.split('\n'):
+                if line.strip():
+                    st.session_state.log.append(line.strip())
 
         st.rerun()
 
