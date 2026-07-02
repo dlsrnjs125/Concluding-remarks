@@ -1,4 +1,4 @@
-# 플래이어 클래스
+# 플레이어 클래스
 
 class Player:
     def __init__(self, name, hp=100, attack_power=30):
